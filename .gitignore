@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 資料檔（不上傳個人紀錄）
+records.xlsx
+
+# IDE
+.idea/
+.vscode/
+
+# Claude Code
+.claude/
