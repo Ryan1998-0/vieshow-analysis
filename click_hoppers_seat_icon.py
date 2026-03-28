@@ -154,7 +154,7 @@ def parse_seat_info(driver):
     return sold, total
 
 
-# 將查詢結果寫入 Excel，若資料無變化則略過
+# 將查詢結果寫入 Excel（每次執行均寫入，保留完整時間序列）
 def write_record(time_str, lang, session_id, sold, total, movie_title, theater_name):
     init_records()
     wb = openpyxl.load_workbook(RECORDS_FILE)
@@ -162,19 +162,5 @@ def write_record(time_str, lang, session_id, sold, total, movie_title, theater_n
     date_str = datetime.now().strftime('%Y-%m-%d')
     now = datetime.now().strftime('%Y-%m-%d %H:%M')
     rate = round(sold / total * 100, 1) if total > 0 else 0
-
-    for row in range(ws.max_row, 1, -1):
-        existing_session = ws[f"G{row}"].value
-        existing_date = ws[f"D{row}"].value
-        existing_time = ws[f"E{row}"].value
-        existing_sold = ws[f"H{row}"].value
-        existing_total = ws[f"I{row}"].value
-        if str(existing_session) == str(session_id) and existing_date == date_str and existing_time == time_str:
-            if existing_sold == sold and existing_total == total:
-                print(f'  [{time_str} {lang}] 無變化，略過')
-                wb.close()
-                return
-            break
-
     ws.append([now, theater_name, movie_title, date_str, time_str, lang, session_id, sold, total, rate])
     wb.save(RECORDS_FILE)
