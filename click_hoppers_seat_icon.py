@@ -108,6 +108,14 @@ def get_all_sessions(driver, movie_name, versions=None):
             if 'txtSessionId=' in booking_href:
                 session_id = booking_href.split('txtSessionId=')[-1].split('&')[0]
                 if time_str:
+                    try:
+                        h, m = map(int, time_str.split(':'))
+                        session_dt = datetime.now().replace(hour=h, minute=m, second=0, microsecond=0)
+                        if session_dt < datetime.now():
+                            print(f'  略過已過場次：{time_str}')
+                            continue
+                    except ValueError:
+                        pass
                     sessions.append((time_str, lang, session_id))
 
     return sessions
