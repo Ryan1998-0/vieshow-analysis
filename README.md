@@ -43,8 +43,15 @@ vieshow-analysis/
 
 ## 設定方式
 
-編輯 `config.py`，在 `MOVIES` 清單中新增要監控的電影：
+編輯 `config.py`：
 
+**切換影城**（共 18 間，ID 對應見 config.py 內註解）：
+```python
+THEATER_ID = 2
+THEATER_NAME = "台北京站威秀影城"
+```
+
+**新增要監控的電影**：
 ```python
 MOVIES = [
     {
@@ -89,3 +96,13 @@ python main.py
 
 寫入完成
 ```
+
+---
+
+## 更新紀錄
+
+### 2026-03-28
+- 新增影城欄位：Excel 輸出新增「影城」欄，記錄資料來源影城名稱
+- 新增影城切換設定：`config.py` 加入 `THEATER_ID` / `THEATER_NAME`，列出全台 18 間威秀影城 ID 對照表
+- 修正過期場次卡住問題：自動略過已過時間的場次，避免點擊灰色圖示後程式卡死
+- 修正啟動緩慢問題：移除 `webdriver_manager` 自動下載（原需 170 秒），改用系統內建 chromedriver
