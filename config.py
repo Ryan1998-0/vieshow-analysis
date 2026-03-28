@@ -1,4 +1,25 @@
-THEATER_DETAIL_URL = "https://www.vscinemas.com.tw/theater/detail.aspx?id=1"
+# 影城 ID 對照表（修改下方 THEATER_ID 來切換影城）：
+#   1  台北信義威秀影城
+#   2  台北京站威秀影城
+#   4  板橋大遠百威秀影城
+#   5  林口MITSUI OUTLET PARK威秀影城
+#   7  新竹大遠百威秀影城
+#   9  新竹巨城威秀影城
+#  10  頭份尚順威秀影城
+#  11  台中大遠百威秀影城
+#  15  台南大遠百威秀影城
+#  16  台南南紡威秀影城
+#  18  高雄大遠百威秀影城
+#  20  桃園統領威秀影城
+#  21  花蓮新天堂樂園威秀影城
+#  22  台南FOCUS威秀影城
+#  25  中和環球威秀影城
+#  26  台中大魯閣新時代威秀影城
+#  28  新店裕隆城威秀影城
+#  29  桃園桃知道威秀影城
+THEATER_ID = 2
+THEATER_NAME = "台北京站威秀影城"
+THEATER_DETAIL_URL = f"https://www.vscinemas.com.tw/theater/detail.aspx?id={THEATER_ID}"
 RECORDS_FILE = "records.xlsx"
 
 # 新增要監控的電影：

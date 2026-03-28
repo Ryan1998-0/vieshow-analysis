@@ -12,7 +12,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-from config import THEATER_DETAIL_URL, RECORDS_FILE
+from config import THEATER_DETAIL_URL, RECORDS_FILE, THEATER_NAME
 
 
 # 初始化 Excel 紀錄檔
@@ -21,7 +21,7 @@ def init_records():
         wb = openpyxl.Workbook()
         ws = wb.active
         ws.title = "售票紀錄"
-        headers = ["查詢時間", "電影", "日期", "場次", "語言", "session_id", "已售出", "總座位", "售出率%"]
+        headers = ["查詢時間", "影城", "電影", "日期", "場次", "語言", "session_id", "已售出", "總座位", "售出率%"]
         ws.append(headers)
         from openpyxl.styles import Font, PatternFill, Alignment
         for cell in ws[1]:
@@ -29,14 +29,15 @@ def init_records():
             cell.fill = PatternFill(fill_type="solid", fgColor="2F5496")
             cell.alignment = Alignment(horizontal="center")
         ws.column_dimensions["A"].width = 18
-        ws.column_dimensions["B"].width = 12
-        ws.column_dimensions["C"].width = 8
+        ws.column_dimensions["B"].width = 20
+        ws.column_dimensions["C"].width = 12
         ws.column_dimensions["D"].width = 8
-        ws.column_dimensions["E"].width = 12
+        ws.column_dimensions["E"].width = 8
         ws.column_dimensions["F"].width = 12
-        ws.column_dimensions["G"].width = 8
+        ws.column_dimensions["G"].width = 12
         ws.column_dimensions["H"].width = 8
-        ws.column_dimensions["I"].width = 10
+        ws.column_dimensions["I"].width = 8
+        ws.column_dimensions["J"].width = 10
         wb.save(RECORDS_FILE)
 
 
@@ -48,7 +49,7 @@ def init_driver(headless=False):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
-    service = Service(ChromeDriverManager().install())
+    service = Service()
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
@@ -163,11 +164,11 @@ def write_record(time_str, lang, session_id, sold, total, movie_title):
     rate = round(sold / total * 100, 1) if total > 0 else 0
 
     for row in range(ws.max_row, 1, -1):
-        existing_session = ws[f"F{row}"].value
-        existing_date = ws[f"C{row}"].value
-        existing_time = ws[f"D{row}"].value
-        existing_sold = ws[f"G{row}"].value
-        existing_total = ws[f"H{row}"].value
+        existing_session = ws[f"G{row}"].value
+        existing_date = ws[f"D{row}"].value
+        existing_time = ws[f"E{row}"].value
+        existing_sold = ws[f"H{row}"].value
+        existing_total = ws[f"I{row}"].value
         if str(existing_session) == str(session_id) and existing_date == date_str and existing_time == time_str:
             if existing_sold == sold and existing_total == total:
                 print(f'  [{time_str} {lang}] 無變化，略過')
@@ -175,5 +176,5 @@ def write_record(time_str, lang, session_id, sold, total, movie_title):
                 return
             break
 
-    ws.append([now, movie_title, date_str, time_str, lang, session_id, sold, total, rate])
+    ws.append([now, THEATER_NAME, movie_title, date_str, time_str, lang, session_id, sold, total, rate])
     wb.save(RECORDS_FILE)
