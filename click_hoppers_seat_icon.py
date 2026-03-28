@@ -12,7 +12,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-from config import THEATER_DETAIL_URL, RECORDS_FILE, THEATER_NAME
+from config import RECORDS_FILE
 
 
 # 初始化 Excel 紀錄檔
@@ -55,8 +55,8 @@ def init_driver(headless=False):
 
 
 # 開啟戲院頁面並點擊今天的日期頁籤
-def click_today_date(driver):
-    driver.get(THEATER_DETAIL_URL)
+def click_today_date(driver, theater_url):
+    driver.get(theater_url)
     WebDriverWait(driver, 30).until(
         EC.presence_of_element_located((By.TAG_NAME, 'body'))
     )
@@ -155,7 +155,7 @@ def parse_seat_info(driver):
 
 
 # 將查詢結果寫入 Excel，若資料無變化則略過
-def write_record(time_str, lang, session_id, sold, total, movie_title):
+def write_record(time_str, lang, session_id, sold, total, movie_title, theater_name):
     init_records()
     wb = openpyxl.load_workbook(RECORDS_FILE)
     ws = wb.active
@@ -176,5 +176,5 @@ def write_record(time_str, lang, session_id, sold, total, movie_title):
                 return
             break
 
-    ws.append([now, THEATER_NAME, movie_title, date_str, time_str, lang, session_id, sold, total, rate])
+    ws.append([now, theater_name, movie_title, date_str, time_str, lang, session_id, sold, total, rate])
     wb.save(RECORDS_FILE)
