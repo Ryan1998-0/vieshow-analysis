@@ -128,7 +128,7 @@ def click_seat_icon(driver, session_id):
         By.XPATH,
         f"//a[contains(@href,'SessionSeats.aspx') and contains(@href,'txtSessionId={session_id}')]"
     )
-    seat_link.click()
+    driver.execute_script("arguments[0].scrollIntoView(); arguments[0].click();", seat_link)
     time.sleep(3)
 
     if len(driver.window_handles) > 1:

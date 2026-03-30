@@ -35,7 +35,6 @@ RECORDS_FILE = "records.xlsx"
 #  28  新店裕隆城威秀影城   29  桃園桃知道威秀影城
 THEATERS = [
     {"id": 1, "name": "台北信義威秀影城"},
-    {"id": 2, "name": "台北京站威秀影城"},
 ]
 
 # 新增要監控的電影：
@@ -44,13 +43,33 @@ THEATERS = [
 #   versions — 要監控的版本清單，留空 [] 代表監控所有版本
 MOVIES = [
     {
-        "name": "HOPPERS",
-        "title": "狸想世界",
+        "name": "THE SUPER MARIO GALAXY MOVIE",
+        "title": "超級瑪利歐銀河電影版",
         "versions": ["數位(英)"],
     },
     {
-        "name": "PROJECT HAIL MARY",
-        "title": "極限返航",
+        "name": "HOPPERS",
+        "title": "狸想世界",
+        "versions": ["數位(國)"],
+    },
+    {
+        "name": "ASSASSINATION CLASSROOM THE MOVIE OUR TIME",
+        "title": "劇場版「暗殺教室」：我們的時光",
+        "versions": ["數位(日)"],
+    },
+    {
+        "name": "WUTHERING HEIGHTS",
+        "title": "咆哮山莊",
         "versions": ["數位(英)"],
+    },
+    {
+        "name": "DEEP QUIET ROOM",
+        "title": "深度安靜",
+        "versions": ["數位(國)"],
+    },
+    {
+        "name": "SUNSHINE WOMENS CHOIR",
+        "title": "陽光女子合唱團",
+        "versions": ["數位(國)"],
     },
 ]
